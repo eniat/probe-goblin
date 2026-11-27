@@ -1,0 +1,13 @@
+
+                 ?              ,.   (   .      )        .      "
+         __        ??          ("     )  )'     ,'        )  . (`     '`
+    (___()'`;   ???          .; )  ' (( (" )    ;(,     ((  (  ;)  "  )")
+    /,___ /`                 _"., ,._'_.,)_(..,( . )_  _' )_') (. _..( ' )
+    \\   \\                 |____|____|____|____|____|____|____|____|____|
+
+                                ~ WAFW00F : v2.4.2 ~
+                    ~ Sniffing Web Application Firewalls since 2009 ~
+
+[*] Checking http://127.0.0.1:8779/
+ERROR:wafw00f:Something went wrong HTTPConnectionPool(host='127.0.0.1', port=8779): Max retries exceeded with url: / (Caused by NewConnectionError("HTTPConnection(host='127.0.0.1', port=8779): Failed to establish a new connection: [Errno 111] Connection refused"))
+ERROR:wafw00f:Site 127.0.0.1 appears to be down

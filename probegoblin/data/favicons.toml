@@ -1,0 +1,68 @@
+# Favicon hash to product. Hash is the Shodan-style mmh3 of base64.encodebytes(favicon bytes).
+# Each hash was computed from the product's own favicon file in its source repository on 2026-11-26.
+# Other releases of a product may ship a different favicon. A match identifies the favicon, not the version.
+
+[[favicon]]
+hash = 81586312
+product = "Jenkins"
+source = "jenkinsci/jenkins war/src/main/webapp/favicon.ico"
+
+[[favicon]]
+hash = -297069493
+product = "Apache Tomcat"
+source = "apache/tomcat webapps/ROOT/favicon.ico"
+
+[[favicon]]
+hash = 2123863676
+product = "Grafana"
+source = "grafana/grafana public/img/fav32.png"
+
+[[favicon]]
+hash = 1015329088
+product = "Drupal"
+source = "drupal/drupal core/misc/favicon.ico"
+
+[[favicon]]
+hash = -1668137428
+product = "Gitea"
+source = "go-gitea/gitea public/assets/img/favicon.png"
+
+[[favicon]]
+hash = -1105083093
+product = "Keycloak"
+source = "keycloak/keycloak themes keycloak/common/resources/img/favicon.ico"
+
+[[favicon]]
+hash = 720980106
+product = "Kibana"
+source = "elastic/kibana favicons/favicon.png"
+
+[[favicon]]
+hash = 167837543
+product = "Nextcloud"
+source = "nextcloud/server core/img/favicon.ico"
+
+[[favicon]]
+hash = -476231906
+product = "phpMyAdmin"
+source = "phpmyadmin/phpmyadmin favicon.ico (QA_5_2)"
+
+[[favicon]]
+hash = 712297537
+product = "Portainer"
+source = "portainer/portainer app/assets/ico/favicon.ico"
+
+[[favicon]]
+hash = -1015107330
+product = "RabbitMQ Management"
+source = "rabbitmq/rabbitmq-server rabbitmq_management/priv/www/favicon.ico"
+
+[[favicon]]
+hash = -1754690812
+product = "Roundcube"
+source = "roundcube/roundcubemail skins/elastic/images/favicon.ico"
+
+[[favicon]]
+hash = 892542951
+product = "Zabbix"
+source = "zabbix/zabbix ui/favicon.ico"

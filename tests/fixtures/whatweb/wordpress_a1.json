@@ -1,0 +1,3 @@
+[
+{"target":"http://127.0.0.1:8765/","http_status":200,"request_config":{"headers":{"User-Agent":"ProbeGoblin/0.1.0"}},"plugins":{"Country":{"string":["RESERVED"],"module":["ZZ"]},"HTTPServer":{"string":["SimpleHTTP/0.6 Python/3.13.18"]},"IP":{"string":["127.0.0.1"]},"JQuery":{},"MetaGenerator":{"string":["WordPress 6.2"]},"Python":{"version":["3.13.18"]},"Script":{},"Title":{"string":["Test"]},"WordPress":{"version":["6.2"]}}}
+]

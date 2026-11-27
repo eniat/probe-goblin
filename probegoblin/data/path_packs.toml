@@ -1,0 +1,78 @@
+# Tech-specific paths for DisclosureGoblin. A pack runs only when TechnologyGoblin detects one of
+# its `tech` names, or a response in the page store matches one of its `markers`.
+# Each path: `path`, optional `method` (GET or HEAD, default GET), `check` (the confirmation rule
+# in modules/disclosure.py) and `title`.
+
+[[pack]]
+name = "WordPress"
+tech = ["WordPress"]
+markers = ["/wp-content/", "/wp-includes/"]
+paths = [
+    { path = "/wp-json/wp/v2/users", check = "wp_users", title = "WordPress users listed by the REST API" },
+    { path = "/xmlrpc.php", check = "xmlrpc", title = "WordPress XML-RPC enabled" },
+    { path = "/wp-content/debug.log", check = "php_log", title = "WordPress debug log exposed" },
+]
+
+[[pack]]
+name = "Drupal"
+tech = ["Drupal"]
+markers = ["Drupal.settings", "/sites/default/files/"]
+paths = [
+    { path = "/CHANGELOG.txt", check = "drupal_changelog", title = "Drupal changelog exposes the version" },
+    { path = "/core/CHANGELOG.txt", check = "drupal_changelog", title = "Drupal changelog exposes the version" },
+]
+
+[[pack]]
+name = "Joomla"
+tech = ["Joomla"]
+markers = ["/media/jui/", "Joomla!"]
+paths = [
+    { path = "/administrator/manifests/files/joomla.xml", check = "joomla_manifest", title = "Joomla manifest exposes the version" },
+]
+
+[[pack]]
+name = "Spring Boot"
+tech = ["Spring"]
+markers = ["Whitelabel Error Page"]
+paths = [
+    { path = "/actuator", check = "actuator_index", title = "Spring Boot Actuator endpoints exposed" },
+    { path = "/actuator/health", check = "actuator_health", title = "Spring Boot health endpoint" },
+    { path = "/actuator/env", check = "actuator_env", title = "Spring Boot environment endpoint exposed" },
+    { path = "/actuator/heapdump", method = "HEAD", check = "heapdump", title = "Spring Boot heap dump downloadable" },
+]
+
+[[pack]]
+name = "Laravel"
+tech = ["Laravel"]
+markers = ["laravel_session"]
+paths = [
+    { path = "/_ignition/health-check", check = "ignition", title = "Laravel Ignition exposed" },
+    { path = "/telescope", check = "telescope", title = "Laravel Telescope exposed" },
+    { path = "/storage/logs/laravel.log", check = "laravel_log", title = "Laravel log file exposed" },
+]
+
+[[pack]]
+name = "Symfony"
+tech = ["Symfony"]
+markers = ["sf-toolbar", "X-Debug-Token"]
+paths = [
+    { path = "/_profiler", check = "symfony_profiler", title = "Symfony profiler exposed" },
+    { path = "/app_dev.php", check = "symfony_dev", title = "Symfony development front controller exposed" },
+]
+
+[[pack]]
+name = "ASP.NET"
+tech = ["Microsoft ASP.NET"]
+markers = ["__VIEWSTATE", "ASP.NET_SessionId"]
+paths = [
+    { path = "/elmah.axd", check = "elmah", title = "ELMAH error log exposed" },
+    { path = "/trace.axd", check = "trace_axd", title = "ASP.NET trace viewer exposed" },
+]
+
+[[pack]]
+name = "Tomcat"
+tech = ["Apache Tomcat"]
+markers = ["Apache Tomcat"]
+paths = [
+    { path = "/manager/html", check = "status_only", title = "Tomcat Manager present" },
+]

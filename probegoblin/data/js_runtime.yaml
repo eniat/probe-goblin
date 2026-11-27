@@ -1,0 +1,183 @@
+# JSGoblin runtime detection. Each entry:
+#   name      display name
+#   npm       npm package, used for latest-version and CVE lookups
+#   version   expressions tried in order; property reads only (validated at load)
+#   detect    optional: library counts as present when this is defined (version may be unknown)
+#   unless    optional: skip the entry when any of these is defined (tells look-alikes apart)
+#   template  optional: turns the raw value into the npm version, e.g. "0.{}.0" for three.js
+#   eol       optional endoflife.date product
+#   test      file inside the npm package used by tests/verify_js_runtime.py
+#   test_version / requires   pin for verification, and libraries loaded first
+#   verified  npm version the expressions were checked against in Chromium, or false
+libraries:
+- {name: jQuery, npm: jquery, eol: jquery, version: [jQuery.fn.jquery, $.fn.jquery], test: dist/jquery.min.js, verified: '4.1.0'}
+- {name: jQuery UI, npm: jquery-ui, eol: jquery-ui, version: [jQuery.ui.version], test: dist/jquery-ui.min.js, requires: [jQuery], verified: '1.14.2'}
+- {name: jQuery Migrate, npm: jquery-migrate, version: [jQuery.migrateVersion], test: dist/jquery-migrate.min.js, requires: [jQuery], verified: '4.0.2'}
+- {name: jQuery Mobile, npm: jquery-mobile, version: [jQuery.mobile.version], verified: false}
+- {name: jQuery BlockUI, npm: block-ui, version: [jQuery.blockUI.version], test: jquery.blockUI.js, requires: ['jQuery@3.7.1'], verified: false}
+- {name: jQuery Flot, npm: flot, version: [jQuery.plot.version], test: jquery.flot.js, test_version: 0.8.3, requires: [jQuery], verified: '0.8.3'}
+- {name: Bootstrap, npm: bootstrap, eol: bootstrap, version: [bootstrap.Tooltip.VERSION, jQuery.fn.tooltip.Constructor.VERSION, $.fn.tooltip.Constructor.VERSION], test: dist/js/bootstrap.bundle.min.js, verified: '5.3.9'}
+- {name: Bootstrap Select, npm: bootstrap-select, version: [jQuery.fn.selectpicker.Constructor.VERSION], test: dist/js/bootstrap-select.min.js, test_version: 1.13.18, requires: ['jQuery@3.7.1', Bootstrap 3], verified: '1.13.18'}
+- {name: Bootstrap 3, npm: bootstrap, eol: bootstrap, version: [jQuery.fn.tooltip.Constructor.VERSION], test: dist/js/bootstrap.min.js, test_version: 3.4.1, requires: ['jQuery@3.7.1'], verify_only: true, verified: '3.4.1'}
+- {name: DataTables, npm: datatables.net, version: [jQuery.fn.dataTable.version, $.fn.dataTable.version, DataTable.version], test: js/dataTables.min.js, requires: [jQuery], verified: '3.1.6'}
+- {name: Select2, npm: select2, detect: jQuery.fn.select2, version: [], test: dist/js/select2.min.js, requires: [jQuery], verified: '4.2.0'}
+- {name: Foundation, npm: foundation-sites, version: [Foundation.version], test: dist/js/foundation.min.js, requires: [jQuery], verified: '6.9.0'}
+- {name: UIkit, npm: uikit, version: [UIkit.version], test: dist/js/uikit.min.js, verified: '3.25.31'}
+- {name: Materialize, npm: materialize-css, version: [M.version], test: dist/js/materialize.min.js, verified: '1.0.0'}
+- {name: Kendo UI, npm: kendo-ui-core, version: [kendo.version], test: umd/kendo.core.min.js, requires: [jQuery], verified: '2026.4.1111'}
+- {name: Toastr, npm: toastr, version: [toastr.version], test: build/toastr.min.js, requires: [jQuery], verified: '2.1.4'}
+- {name: Fancybox, npm: '@fancyapps/fancybox', version: [jQuery.fancybox.version], test: dist/jquery.fancybox.min.js, requires: [jQuery], verified: '3.5.7'}
+- {name: Summernote, npm: summernote, version: [jQuery.summernote.version], test: dist/summernote-lite.min.js, requires: [jQuery], verified: '0.9.1'}
+- {name: React, npm: react, eol: react, version: [React.version], test: umd/react.production.min.js, test_version: 18.3.1, verified: '18.3.1'}
+- {name: ReactDOM, npm: react-dom, eol: react, version: [ReactDOM.version], strip: '-next-.*$', test: umd/react-dom.production.min.js, test_version: 18.3.1, requires: [React], verified: '18.3.1'}
+- {name: Angular, npm: '@angular/core', eol: angular, version: ["document.querySelector('[ng-version]')?.getAttribute('ng-version')"], verified: false}
+- {name: AngularJS, npm: angular, eol: angularjs, version: [angular.version.full], test: angular.min.js, verified: '1.8.3'}
+- {name: Vue.js, npm: vue, eol: vue, version: [Vue.version, "document.querySelector('[data-v-app]')?.__vue_app__?.version"], test: dist/vue.global.prod.js, verified: '3.5.46'}
+- {name: Vue Router, npm: vue-router, version: [VueRouter.version], test: dist/vue-router.min.js, test_version: 3.6.5, verified: '3.6.5'}
+- {name: Vuex, npm: vuex, version: [Vuex.version], test: dist/vuex.min.js, test_version: 3.6.2, verified: '3.6.2'}
+- {name: Next.js, npm: next, eol: nextjs, detect: __NEXT_DATA__, version: [next.version], verified: false}
+- {name: Nuxt.js, npm: nuxt, eol: nuxt, detect: __NUXT__, version: [], verified: false}
+- {name: Ember.js, npm: ember-source, version: [Ember.VERSION], verified: false}
+- {name: Backbone.js, npm: backbone, version: [Backbone.VERSION], test: backbone-min.js, requires: [Underscore.js], verified: '1.6.1'}
+- {name: Knockout.js, npm: knockout, version: [ko.version], test: build/output/knockout-latest.js, verified: '3.5.3'}
+- {name: Alpine.js, npm: alpinejs, version: [Alpine.version], test: dist/cdn.min.js, verified: '3.17.5'}
+- {name: htmx, npm: htmx.org, version: [htmx.version], test: dist/htmx.min.js, verified: '2.0.11'}
+- {name: Mithril, npm: mithril, detect: m.redraw, version: [m.version], test: mithril.min.js, verified: '2.3.8'}
+- {name: Riot.js, npm: riot, version: [riot.version], test: riot.min.js, verified: '10.1.7'}
+- {name: Inferno, npm: inferno, version: [Inferno.version], test: dist/inferno.min.js, verified: '10.0.1'}
+- {name: Ractive.js, npm: ractive, version: [Ractive.VERSION], test: ractive.min.js, verified: '1.4.4'}
+- {name: Lit, npm: lit-html, version: ["litHtmlVersions[0]"], verified: false}
+- {name: Lodash, npm: lodash, version: [_.VERSION], detect: _.runInContext, test: lodash.min.js, verified: '4.18.1'}
+- {name: Underscore.js, npm: underscore, version: [_.VERSION], unless: [_.runInContext], test: underscore-umd-min.js, verified: '1.13.8'}
+- {name: Moment.js, npm: moment, version: [moment.version], test: min/moment.min.js, verified: '2.31.0'}
+- {name: Moment Timezone, npm: moment-timezone, version: [moment.tz.version], test: builds/moment-timezone-with-data.min.js, requires: [Moment.js], verified: '0.6.6'}
+- {name: Luxon, npm: luxon, version: [luxon.VERSION], test: build/global/luxon.min.js, verified: '3.7.2'}
+- {name: Numeral.js, npm: numeral, version: [numeral.version], test: min/numeral.min.js, verified: '2.0.6'}
+- {name: accounting.js, npm: accounting, version: [accounting.version], test: accounting.min.js, verified: '0.4.1'}
+- {name: Sugar, npm: sugar, version: [Sugar.VERSION], test: dist/sugar.min.js, verified: '2.0.6'}
+- {name: Immutable.js, npm: immutable, version: [Immutable.version], test: dist/immutable.min.js, verified: '5.2.1'}
+- {name: core-js, npm: core-js, version: ["window['__core-js_shared__']?.versions?.[0]?.version", core.version], test: minified.js, npm_test: core-js-bundle, verified: '3.51.0'}
+- {name: Axios, npm: axios, version: [axios.VERSION], test: dist/axios.min.js, verified: '1.21.1'}
+- {name: Handlebars, npm: handlebars, version: [Handlebars.VERSION], test: dist/handlebars.min.js, verified: '4.7.10'}
+- {name: Mustache.js, npm: mustache, version: [Mustache.version], test: mustache.min.js, verified: '4.2.0'}
+- {name: EJS, npm: ejs, detect: ejs.compile, version: [ejs.VERSION], test: ejs.min.js, verified: '7.0.2'}
+- {name: Dust.js, npm: dustjs-linkedin, version: [dust.version], test: dist/dust-full.min.js, verified: '3.0.1 (reports 3.0.0)'}
+- {name: DOMPurify, npm: dompurify, version: [DOMPurify.version], test: dist/purify.min.js, verified: '3.5.0'}
+- {name: Modernizr, npm: modernizr, version: [Modernizr._version], verified: false}
+- {name: Prototype, npm: prototypejs, version: [Prototype.Version], verified: false}
+- {name: script.aculo.us, npm: scriptaculous, version: [Scriptaculous.Version], verified: false}
+- {name: MooTools, npm: mootools, version: [MooTools.version], verified: false}
+- {name: YUI, npm: yui, version: [YUI.version], test: yui/yui-min.js, verified: '3.18.1'}
+- {name: Ext JS, npm: '@sencha/ext', version: [Ext.versions.core.version, Ext.version], verified: false}
+- {name: Dojo, npm: dojo, version: [dojo.version.major], verified: false}
+- {name: Chart.js, npm: chart.js, version: [Chart.version], test: dist/chart.umd.js, verified: '4.6.2'}
+- {name: Chartist, npm: chartist, version: [Chartist.version], test: dist/chartist.min.js, test_version: 0.11.4, verified: '0.11.4'}
+- {name: D3.js, npm: d3, version: [d3.version], test: dist/d3.min.js, verified: '7.9.2'}
+- {name: C3.js, npm: c3, version: [c3.version], test: c3.min.js, requires: [D3.js], verified: '0.7.20'}
+- {name: Three.js, npm: three, version: [THREE.REVISION], template: "0.{}.0", test: build/three.min.js, test_version: 0.149.0, verified: '0.149.0'}
+- {name: Babylon.js, npm: babylonjs, version: [BABYLON.Engine.Version], test: babylon.js, verified: '9.38.0'}
+- {name: A-Frame, npm: aframe, version: [AFRAME.version], test: dist/aframe-master.min.js, verified: '1.8.0'}
+- {name: PixiJS, npm: pixi.js, version: [PIXI.VERSION], test: dist/pixi.min.js, verified: '8.23.0'}
+- {name: Phaser, npm: phaser, version: [Phaser.VERSION], test: dist/phaser.min.js, verified: '4.2.1'}
+- {name: p5.js, npm: p5, version: [p5.VERSION, p5.prototype.VERSION], test: lib/p5.min.js, verified: '2.4.0'}
+- {name: Paper.js, npm: paper, version: [paper.version], test: dist/paper-full.min.js, verified: '0.17.0'}
+- {name: Fabric.js, npm: fabric, version: [fabric.version], test: dist/fabric.min.js, test_version: 5.3.0, verified: '5.3.0'}
+- {name: Konva, npm: konva, version: [Konva.version], test: konva.min.js, verified: '10.11.0'}
+- {name: Two.js, npm: two.js, version: [Two.Version], test: build/two.min.js, verified: '0.8.24'}
+- {name: Raphael, npm: raphael, version: [Raphael.version], test: raphael.min.js, verified: '2.3.0'}
+- {name: Matter.js, npm: matter-js, version: [Matter.version], test: build/matter.min.js, verified: '0.20.0'}
+- {name: Highcharts, npm: highcharts, version: [Highcharts.version], test: highcharts.js, verified: '13.1.1'}
+- {name: Apache ECharts, npm: echarts, version: [echarts.version], test: dist/echarts.min.js, verified: '6.1.0'}
+- {name: Plotly.js, npm: plotly.js-dist-min, version: [Plotly.version], test: plotly.min.js, verified: '4.3.0'}
+- {name: Dygraphs, npm: dygraphs, version: [Dygraph.VERSION], test: dist/dygraph.min.js, verified: '2.2.2'}
+- {name: Cytoscape.js, npm: cytoscape, version: [cytoscape.version], test: dist/cytoscape.min.js, verified: '3.35.0'}
+- {name: Vega, npm: vega, version: [vega.version], test: build/vega.min.js, verified: '6.4.0'}
+- {name: Vega-Lite, npm: vega-lite, version: [vegaLite.version], test: build/vega-lite.min.js, requires: [Vega], verified: '6.5.0'}
+- {name: Leaflet, npm: leaflet, version: [L.version], test: dist/leaflet.js, verified: '1.9.4'}
+- {name: OpenLayers, npm: ol, version: [ol.util.VERSION, ol.VERSION], test: dist/ol.js, verified: '10.11.0'}
+- {name: Mapbox GL JS, npm: mapbox-gl, version: [mapboxgl.version], test: dist/mapbox-gl.js, verified: '3.36.0'}
+- {name: MapLibre GL JS, npm: maplibre-gl, detect: maplibregl.Map, version: [maplibregl.version], test: dist/maplibre-gl.js, test_version: 4.7.1, verified: '4.7.1'}
+- {name: Google Maps JavaScript API, npm: '@googlemaps/js-api-loader', version: [google.maps.version], verified: false, no_lookup: true}
+- {name: TinyMCE, npm: tinymce, version: ["tinymce.majorVersion + '.' + tinymce.minorVersion"], test: tinymce.min.js, verified: '8.11.0'}
+- {name: CKEditor 4, npm: ckeditor4, version: [CKEDITOR.version], verified: false}
+- {name: CKEditor 5, npm: ckeditor5, version: [CKEDITOR_VERSION], test: dist/browser/ckeditor5.umd.js, verified: '49.1.0'}
+- {name: Quill, npm: quill, version: [Quill.version], test: dist/quill.js, verified: '2.0.3'}
+- {name: CodeMirror, npm: codemirror, version: [CodeMirror.version], test: lib/codemirror.js, test_version: 5.65.18, verified: '5.65.18'}
+- {name: Ace, npm: ace-builds, version: [ace.version], test: src-min/ace.js, verified: '1.45.2'}
+- {name: Froala Editor, npm: froala-editor, version: [FroalaEditor.VERSION], test: js/froala_editor.min.js, verified: '5.6.0'}
+- {name: Trix, npm: trix, version: [Trix.VERSION, Trix.config.version], test: dist/trix.umd.min.js, verified: '2.1.19'}
+- {name: highlight.js, npm: '@highlightjs/cdn-assets', version: [hljs.versionString], test: highlight.min.js, verified: '11.12.0'}
+- {name: KaTeX, npm: katex, version: [katex.version], test: dist/katex.min.js, verified: '0.19.1'}
+- {name: MathJax, npm: mathjax, version: [MathJax.version], test: es5/tex-chtml.js, test_version: 3.2.2, verified: '3.2.2'}
+- {name: GSAP, npm: gsap, version: [gsap.version], test: dist/gsap.min.js, verified: '3.15.1'}
+- {name: GSAP TweenMax, npm: gsap, version: [TweenMax.version, TweenLite.version], test: src/minified/TweenMax.min.js, test_version: 2.1.3, verified: '2.1.3'}
+- {name: anime.js, npm: animejs, version: [anime.version], test: lib/anime.min.js, test_version: 3.2.2, verified: '3.2.2 (reports 3.2.1)'}
+- {name: ScrollMagic, npm: scrollmagic, version: [ScrollMagic.version], test: scrollmagic/minified/ScrollMagic.min.js, verified: '2.0.9'}
+- {name: Lottie, npm: lottie-web, version: [lottie.version, bodymovin.version], test: build/player/lottie.min.js, verified: '5.13.0'}
+- {name: Hammer.js, npm: hammerjs, version: [Hammer.VERSION], test: hammer.min.js, verified: '2.0.9'}
+- {name: Sortable, npm: sortablejs, version: [Sortable.version], test: Sortable.min.js, verified: '1.15.7'}
+- {name: interact.js, npm: interactjs, version: [interact.version], test: dist/interact.min.js, verified: '1.10.29'}
+- {name: Dropzone, npm: dropzone, version: [Dropzone.version], test: dist/min/dropzone.min.js, test_version: 5.9.3, verified: '5.9.3'}
+- {name: Plupload, npm: plupload, version: [plupload.VERSION], test: js/plupload.full.min.js, verified: '2.3.9 (reports 2.3.6)'}
+- {name: noUiSlider, npm: nouislider, detect: noUiSlider.create, version: [noUiSlider.version], test: dist/nouislider.min.js, verified: '15.8.1'}
+- {name: intro.js, npm: intro.js, version: [introJs.version], test: minified/intro.min.js, verified: '8.7.0'}
+- {name: SweetAlert2, npm: sweetalert2, version: [Swal.version, Sweetalert2.version], test: dist/sweetalert2.all.min.js, verified: '11.26.26'}
+- {name: FullCalendar, npm: fullcalendar, version: [FullCalendar.version], test: index.global.min.js, test_version: 6.1.15, verified: '6.1.15'}
+- {name: Handsontable, npm: handsontable, version: [Handsontable.version], test: dist/handsontable.full.min.js, verified: '19.0.0'}
+- {name: Webix, npm: webix, version: [webix.version], test: webix.min.js, verified: '11.4.0'}
+- {name: DevExtreme, npm: devextreme, version: [DevExpress.VERSION], verified: false}
+- {name: Video.js, npm: video.js, version: [videojs.VERSION], test: dist/video.min.js, test_version: 8.21.0, verified: '8.21.0'}
+- {name: MediaElement.js, npm: mediaelement, version: [mejs.version], test: build/mediaelement-and-player.min.js, verified: '7.1.0'}
+- {name: hls.js, npm: hls.js, version: [Hls.version], test: dist/hls.min.js, verified: '1.7.4'}
+- {name: Shaka Player, npm: shaka-player, version: [shaka.Player.version], test: dist/shaka-player.compiled.js, verified: '5.3.6'}
+- {name: Tone.js, npm: tone, version: [Tone.version], test: build/Tone.js, verified: '15.1.22'}
+- {name: Socket.IO, npm: socket.io-client, detect: io.Manager, version: [io.version], test: dist/socket.io.min.js, verified: '4.8.4'}
+- {name: SockJS, npm: sockjs-client, version: [SockJS.version], test: dist/sockjs.min.js, verified: '1.6.1'}
+- {name: SignalR, npm: '@microsoft/signalr', version: [signalR.VERSION], test: dist/browser/signalr.min.js, verified: '11.0.0'}
+- {name: Pusher, npm: pusher-js, detect: Pusher.Runtime, version: [Pusher.VERSION], test: dist/web/pusher.min.js, verified: '8.6.0'}
+- {name: Firebase, npm: firebase, version: [firebase.SDK_VERSION], test: firebase-app-compat.js, verified: '13.4.0'}
+- {name: Sentry, npm: '@sentry/browser', version: [Sentry.SDK_VERSION], verified: false}
+- {name: Raven.js, npm: raven-js, version: [Raven.VERSION], test: dist/raven.min.js, verified: '3.27.2'}
+- {name: InstantSearch.js, npm: instantsearch.js, version: [instantsearch.version], test: dist/instantsearch.production.min.js, verified: '4.123.1'}
+- {name: Algolia Search, npm: algoliasearch, version: [algoliasearch.version], test: dist/algoliasearch-lite.umd.js, test_version: 4.24.0, verified: '4.24.0'}
+- {name: Lunr, npm: lunr, version: [lunr.version], test: lunr.min.js, verified: '2.3.9'}
+- {name: Fuse.js, npm: fuse.js, version: [Fuse.version], test: dist/fuse.min.js, test_version: 6.6.2, verified: '6.6.2'}
+- {name: PDF.js, npm: pdfjs-dist, version: [pdfjsLib.version], test: build/pdf.min.js, test_version: 3.11.174, verified: '3.11.174'}
+- {name: jsPDF, npm: jspdf, version: [jspdf.jsPDF.version, jsPDF.version], test: dist/jspdf.umd.min.js, verified: '4.2.1'}
+- {name: SheetJS, npm: xlsx, version: [XLSX.version], test: dist/xlsx.full.min.js, verified: '0.18.5'}
+- {name: JSZip, npm: jszip, version: [JSZip.version], test: dist/jszip.min.js, verified: '3.10.2'}
+- {name: JSEncrypt, npm: jsencrypt, version: [JSEncrypt.version], test: bin/jsencrypt.min.js, verified: '3.5.4'}
+- {name: web3.js, npm: web3, version: [Web3.version], test: dist/web3.min.js, test_version: 1.10.4, verified: '1.10.4'}
+- {name: ethers.js, npm: ethers, version: [ethers.version], test: dist/ethers.umd.min.js, verified: '6.17.0'}
+- {name: TensorFlow.js, npm: '@tensorflow/tfjs', version: [tf.version_core, tf.version.tfjs], test: dist/tf.min.js, verified: '4.22.0'}
+- {name: Bacon.js, npm: baconjs, version: [Bacon.version], test: dist/Bacon.min.js, verified: '3.0.23 (reports 3.0.22)'}
+- {name: store.js, npm: store, version: [store.version], test: dist/store.legacy.min.js, verified: '2.0.12'}
+- {name: Skrollr, npm: skrollr, version: [skrollr.VERSION], test: dist/skrollr.min.js, verified: '0.6.26'}
+- {name: SoundJS, npm: soundjs, version: [createjs.SoundJS.version], verified: false}
+- {name: EaselJS, npm: easeljs, version: [createjs.EaselJS.version], verified: false}
+- {name: Cesium, npm: cesium, version: [Cesium.VERSION], verified: false}
+- {name: Marionette, npm: backbone.marionette, version: [Marionette.VERSION, Backbone.Marionette.VERSION], verified: false}
+- {name: Polymer, npm: '@polymer/polymer', version: [Polymer.version], verified: false}
+- {name: Stimulus, npm: '@hotwired/stimulus', detect: Stimulus, version: [], verified: false}
+- {name: Turbo, npm: '@hotwired/turbo', detect: Turbo, version: [], verified: false}
+- {name: Svelte, npm: svelte, detect: __svelte, version: [], verified: false}
+- {name: Preact, npm: preact, detect: preact, version: [], verified: false}
+- {name: Popper.js, npm: '@popperjs/core', detect: Popper, version: [], verified: false}
+- {name: Swiper, npm: swiper, detect: Swiper, version: [], verified: false}
+- {name: Slick, npm: slick-carousel, detect: jQuery.fn.slick, version: [], verified: false}
+- {name: Owl Carousel, npm: owl.carousel, detect: jQuery.fn.owlCarousel, version: [], verified: false}
+- {name: Magnific Popup, npm: magnific-popup, detect: jQuery.fn.magnificPopup, version: [], verified: false}
+- {name: Isotope, npm: isotope-layout, detect: Isotope, version: [], verified: false}
+- {name: Masonry, npm: masonry-layout, detect: Masonry, version: [], verified: false}
+- {name: Day.js, npm: dayjs, detect: dayjs, version: [], verified: false}
+- {name: Clipboard.js, npm: clipboard, detect: ClipboardJS, version: [], verified: false}
+- {name: Flatpickr, npm: flatpickr, detect: flatpickr, version: [], verified: false}
+- {name: Howler.js, npm: howler, detect: Howler, version: [], verified: false}
+- {name: AOS, npm: aos, detect: AOS, version: [], verified: false}
+- {name: Marked, npm: marked, detect: marked, version: [], verified: false}
+- {name: Prism, npm: prismjs, detect: Prism, version: [], verified: false}
+- {name: PapaParse, npm: papaparse, detect: Papa, version: [], verified: false}
+- {name: Cropper.js, npm: cropperjs, detect: Cropper, version: [], verified: false}
+- {name: Choices.js, npm: choices.js, detect: Choices, version: [], verified: false}
+- {name: Mermaid, npm: mermaid, detect: mermaid, version: [], verified: false}
+- {name: ApexCharts, npm: apexcharts, detect: ApexCharts, version: [], verified: false}

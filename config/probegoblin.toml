@@ -1,0 +1,87 @@
+# ProbeGoblin defaults. Copy to ~/.config/probegoblin/probegoblin.toml to change them,
+# or pass --config <file>. CLI options override this file.
+
+rate = 3.0                    # requests per second
+concurrency = 3
+max_requests = 300            # per target
+timeout = 10.0                # seconds per request
+max_response_bytes = 2097152  # 2 MB
+max_js_bytes = 5242880        # 5 MB
+max_js_files = 30
+max_robots_urls = 20
+max_redirects = 5
+blocked_threshold = 5          # consecutive 429/503 (or unexpected 403) before pausing
+browser_page_limit = 8
+user_agent = "ProbeGoblin/0.1.0"
+
+auth_paths = [
+    "/login",
+    "/signin",
+    "/sign-in",
+    "/account/login",
+    "/user/login",
+    "/auth/login",
+    "/account",
+    "/my-account",
+    "/profile",
+    "/register",
+    "/signup",
+    "/forgot-password",
+    "/password/reset",
+    "/reset-password",
+]
+
+api_paths = [
+    "/api",
+    "/api/v1",
+    "/swagger",
+    "/swagger-ui/",
+    "/swagger-ui.html",
+    "/api-docs",
+    "/v2/api-docs",
+    "/v3/api-docs",
+    "/openapi.json",
+    "/swagger.json",
+    "/graphql",
+    "/graphiql",
+]
+
+disclosure_paths = [
+    "/.git/HEAD",
+    "/.env",
+    "/.DS_Store",
+    "/server-status",
+    "/server-info",
+    "/phpinfo.php",
+    "/info.php",
+    "/web.config",
+    "/crossdomain.xml",
+    "/clientaccesspolicy.xml",
+    "/.well-known/security.txt",
+    "/security.txt",
+    "/backup.zip",
+    "/site.zip",
+]
+
+# URLs containing these words are never requested.
+unsafe_url_words = [
+    "logout",
+    "log-out",
+    "log_out",
+    "signout",
+    "sign-out",
+    "sign_out",
+    "logoff",
+    "delete",
+    "remove",
+    "destroy",
+    "unsubscribe",
+]
+
+[extra_headers]
+# "X-Pentest" = "engagement-id"
+
+[tool_limits]                    # seconds
+testssl = 900
+wafw00f = 120
+whatweb = 60
